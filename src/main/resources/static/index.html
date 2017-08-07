@@ -1,98 +1,110 @@
-<html>
-    <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/moment/min/moment.min.js"></script>
+    <link href="bower_components/vis/dist/vis.css" rel="stylesheet" type="text/css" />
+    <script src="bower_components/vis/dist/vis.min.js"></script>
+    <script src="bower_components/angular-visjs/angular-vis.js"></script>
+    <style type="text/css">
+        .red {
+          fill: red;
+          font-size: 250%;
+        }
+        .normal {
+          font-size: 250%;
+        }
+    </style>
 
-        <script src="node_modules/angular/angular.min.js"></script>
-        <script src="node_modules/chart.js/dist/Chart.min.js"></script>
-        <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
-    </head>
-    <body ng-app="weightApp" ng-controller="weightCtrl">
+</head>
+<body ng-app="weightApp" ng-controller="weightCtrl">
 teste
-        {{firstName}}
+{{firstName}}
 
-        <canvas id="line" class="chart chart-line" chart-data="data"
-                chart-labels="labels" chart-series="series" chart-options="options"
-                chart-dataset-override="datasetOverride" chart-click="onClick">
-        </canvas>
-        <script>
-            var app = angular.module('weightApp', ['chart.js']);
-            app.controller('weightCtrl', function($scope, $http) {
+<vis-graph2d data="data" options="options"></vis-graph2d>
+
+
+<script>
+            var app = angular.module('weightApp', ['ngVis']);
+            app.controller('weightCtrl', function($scope, $http, VisDataSet) {
+
             var url = "weight?patient=rafael";
 
             $http.get(url).then(function(data){
                 console.log("sucesso");
                 console.log(data);
-
-                $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-                $scope.series = ['Weight'];
-                $scope.data = [28, 48, 40, 19, 86, 27, 90];
-                $scope.data = [];
-                $scope.labels = [];
-
-                var min = 95;
-                var max = 105;
-
-                data.data.reverse().forEach(function(item, index){
-                    console.log(item);
-
-                    var today = new Date(item.weightDateTime.epochSecond * 1000);
-                    var dd = today.getDate();
-                    var mm = today.getMonth()+1; //January is 0!
-                    var yyyy = today.getFullYear();
-
-                    if(dd<10) {
-                        dd = '0'+dd
-                    }
-
-                    if(mm<10) {
-                        mm = '0'+mm
-                    }
-
-                    today = dd + '/' + mm;
-
-
-                    $scope.labels.push(today);
-
-                    $scope.data.push(item.value);
-                })
-
-
-
-                  //$scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
-                  $scope.options = {
-                    showAllTooltips: true,
-
-                    onAnimationComplete: function () {
-                        this.showTooltip(this.segments, true);
-                    },
-                    scales: {
-
-                    yAxes: [
-                        {
-                          id: 'y-axis-1',
-                          type: 'linear',
-                          display: true,
-                          position: 'left',
-                          ticks: {
-                                suggestedMin: 96,
-                                suggestedMax: 105,// minimum will be 0, unless there is a lower value.
+                var names = ['Weight'];
+                var groups = new vis.DataSet();
+                    groups.add({
+                        id: 0,
+                        content: names[0],
+                        options: {
+                            drawPoints: {
+                                style: 'square' // square, circle
+                            },
+                            shaded: {
+                                orientation: 'bottom' // top, bottom
                             }
+                        }});
+
+
+                      var label3 = {
+                        content: "Label 3"
+                      }
+
+                    var items = [];
+
+                    var lastValue = 0;
+
+                    data.data.reverse().forEach(function(item, index){
+                        console.log(item);
+
+                        var today = new Date(item.weightDateTime.epochSecond * 1000);
+                        var dd = today.getDate();
+                        var mm = today.getMonth()+1; //January is 0!
+                        var yyyy = today.getFullYear();
+
+                        if(dd<10) {
+                            dd = '0'+dd
                         }
-                      ]
-                    }
-                  };
+
+                        if(mm<10) {
+                            mm = '0'+mm
+                        }
+
+                       // today = yyyy + '-' + mm + '-' + dd;
+
+                        console.log({x: today, y: item.value, group: 0, label: {content:item.value,  className: "red"}});
+
+                        var cssclass = "normal";
+                        if(Number(item.value) > lastValue){
+                            cssclass = "red";
+                        }
+
+                        items.push({x: today, y: item.value, group: 0, label: {content:item.value,  xOffset: -30, className: cssclass}});
+
+                        lastValue = item.value;
+                    })
+
+                    $scope.data = {items: new vis.DataSet(items), groups: groups};
+                    $scope.options = {
+                        dataAxis: {showMinorLabels: true} /* ,
+                        legend: {left:{position:"bottom-left"}},
+                        start: '2014-06-09',
+                        end: '2014-07-03'
+                        */
+                    };
 
             }, function(error){
                 console.log("ERRO");
                 console.log(error);
             });
 
+
+
             });
         </script>
-    </body>
+</body>
 </html>
-
-
-
-
-
-
