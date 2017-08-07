@@ -1,0 +1,98 @@
+<html>
+    <head>
+
+        <script src="node_modules/angular/angular.min.js"></script>
+        <script src="node_modules/chart.js/dist/Chart.min.js"></script>
+        <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+    </head>
+    <body ng-app="weightApp" ng-controller="weightCtrl">
+teste
+        {{firstName}}
+
+        <canvas id="line" class="chart chart-line" chart-data="data"
+                chart-labels="labels" chart-series="series" chart-options="options"
+                chart-dataset-override="datasetOverride" chart-click="onClick">
+        </canvas>
+        <script>
+            var app = angular.module('weightApp', ['chart.js']);
+            app.controller('weightCtrl', function($scope, $http) {
+            var url = "weight?patient=rafael";
+
+            $http.get(url).then(function(data){
+                console.log("sucesso");
+                console.log(data);
+
+                $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+                $scope.series = ['Weight'];
+                $scope.data = [28, 48, 40, 19, 86, 27, 90];
+                $scope.data = [];
+                $scope.labels = [];
+
+                var min = 95;
+                var max = 105;
+
+                data.data.reverse().forEach(function(item, index){
+                    console.log(item);
+
+                    var today = new Date(item.weightDateTime.epochSecond * 1000);
+                    var dd = today.getDate();
+                    var mm = today.getMonth()+1; //January is 0!
+                    var yyyy = today.getFullYear();
+
+                    if(dd<10) {
+                        dd = '0'+dd
+                    }
+
+                    if(mm<10) {
+                        mm = '0'+mm
+                    }
+
+                    today = dd + '/' + mm;
+
+
+                    $scope.labels.push(today);
+
+                    $scope.data.push(item.value);
+                })
+
+
+
+                  //$scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+                  $scope.options = {
+                    showAllTooltips: true,
+
+                    onAnimationComplete: function () {
+                        this.showTooltip(this.segments, true);
+                    },
+                    scales: {
+
+                    yAxes: [
+                        {
+                          id: 'y-axis-1',
+                          type: 'linear',
+                          display: true,
+                          position: 'left',
+                          ticks: {
+                                suggestedMin: 96,
+                                suggestedMax: 105,// minimum will be 0, unless there is a lower value.
+                            }
+                        }
+                      ]
+                    }
+                  };
+
+            }, function(error){
+                console.log("ERRO");
+                console.log(error);
+            });
+
+            });
+        </script>
+    </body>
+</html>
+
+
+
+
+
+
