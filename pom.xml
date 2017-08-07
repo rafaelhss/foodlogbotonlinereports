@@ -25,7 +25,7 @@
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.0-801.jdbc4</version>
+            <version>9.4.1208-jdbc42-atlassian-hosted</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
