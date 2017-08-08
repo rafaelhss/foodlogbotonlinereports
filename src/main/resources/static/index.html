@@ -30,7 +30,7 @@
 
 <script>
             var app = angular.module('weightApp', ['ngVis']);
-            app.controller('weightCtrl', function($scope, $http, VisDataSet) {
+            app.controller('weightCtrl', function($scope, $http, VisDataSet, $location) {
 
             var url = "weight?patient=rafael";
 
@@ -75,7 +75,12 @@
                     data.data.reverse().forEach(function(item, index){
                         console.log(item);
 
-                        var today = new Date(item.weightDateTime.epochSecond * 1000);
+                        var utcOffset = 0;
+                        if(getUrlParameter('utcOffset')){
+                            utcOffset = getUrlParameter('utcOffset');
+                        }
+                        
+                        var today = new Date((item.weightDateTime.epochSecond * 1000) + (Number(utcOffset) * 60 * 60 * 1000));
                         var dd = today.getDate();
                         var mm = today.getMonth()+1; //January is 0!
                         var yyyy = today.getFullYear();
@@ -126,6 +131,24 @@
                 console.log("ERRO");
                 console.log(error);
             });
+
+            function getUrlParameter(param, dummyPath) {
+                    var sPageURL = dummyPath || window.location.search.substring(1),
+                        sURLVariables = sPageURL.split(/[&||?]/),
+                        res;
+
+                    for (var i = 0; i < sURLVariables.length; i += 1) {
+                        var paramName = sURLVariables[i],
+                            sParameterName = (paramName || '').split('=');
+
+                        if (sParameterName[0] === param) {
+                            res = sParameterName[1];
+                        }
+                    }
+
+                    return res;
+            }
+
 
 
 
