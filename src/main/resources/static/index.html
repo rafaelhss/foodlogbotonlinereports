@@ -79,7 +79,7 @@
                         if(getUrlParameter('utcOffset')){
                             utcOffset = getUrlParameter('utcOffset');
                         }
-                        
+
                         var today = new Date((item.weightDateTime.epochSecond * 1000) + (Number(utcOffset) * 60 * 60 * 1000));
                         var dd = today.getDate();
                         var mm = today.getMonth()+1; //January is 0!
