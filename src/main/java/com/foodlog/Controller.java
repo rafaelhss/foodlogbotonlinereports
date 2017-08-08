@@ -17,6 +17,6 @@ public class Controller {
 
     @RequestMapping("/weight")
     public List<Weight> greeting(@RequestParam(value="patient") String patient) {
-        return weightRepository.findTop15ByOrderByWeightDateTimeDesc();
+        return weightRepository.findTop30ByOrderByWeightDateTimeDesc();
     }
 }

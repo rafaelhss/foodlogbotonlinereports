@@ -16,6 +16,6 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface WeightRepository extends JpaRepository<Weight,Long> {
-    List<Weight> findTop15ByOrderByWeightDateTimeDesc();
+    List<Weight> findTop30ByOrderByWeightDateTimeDesc();
 
 }

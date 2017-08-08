@@ -11,10 +11,10 @@
     <style type="text/css">
         .red {
           fill: red;
-          font-size: 250%;
+          font-size: 150%;
         }
         .normal {
-          font-size: 250%;
+          font-size: 150%;
         }
         body{
             width: 90vw;
@@ -24,8 +24,6 @@
 
 </head>
 <body ng-app="weightApp" ng-controller="weightCtrl">
-teste
-{{firstName}}
 
 <vis-graph2d data="data" options="options"></vis-graph2d>
 
@@ -39,7 +37,7 @@ teste
             $http.get(url).then(function(data){
                 console.log("sucesso");
                 console.log(data);
-                var names = ['Weight'];
+                var names = ['Morning', 'Evening', 'Night'];
                 var groups = new vis.DataSet();
                     groups.add({
                         id: 0,
@@ -47,16 +45,28 @@ teste
                         options: {
                             drawPoints: {
                                 style: 'square' // square, circle
-                            },
-                            shaded: {
-                                orientation: 'bottom' // top, bottom
+                            }
+                        }});
+
+                    groups.add({
+                        id: 1,
+                        content: names[1],
+                        options: {
+                            drawPoints: {
+                                style: 'circle' // square, circle
+                            }
+                        }});
+
+                    groups.add({
+                        id: 2,
+                        content: names[2],
+                        options: {
+                            drawPoints: {
+                                style: 'circle' // square, circle
                             }
                         }});
 
 
-                      var label3 = {
-                        content: "Label 3"
-                      }
 
                     var items = [];
 
@@ -80,22 +90,33 @@ teste
 
                        // today = yyyy + '-' + mm + '-' + dd;
 
-                        console.log({x: today, y: item.value, group: 0, label: {content:item.value,  className: "red"}});
+                        var period = 0;
+                         if (today.getHours() >= 12){
+                             if (today.getHours() >= 18){
+                                period = 2
+                             } else {
+                                period = 1
+                             }
+
+                         }
+
+                        console.log(today + " " + today.getHours() + " " + period );
+
 
                         var cssclass = "normal";
                         if(Number(item.value) > lastValue){
                             cssclass = "red";
                         }
 
-                        items.push({x: today, y: item.value, group: 0, label: {content:item.value,  xOffset: -52, className: cssclass}});
+                        items.push({x: today, y: item.value, group: period, label: {content:item.value,  xOffset: -65, className: cssclass}});
 
                         lastValue = item.value;
                     })
 
                     $scope.data = {items: new vis.DataSet(items), groups: groups};
                     $scope.options = {
-                        dataAxis: {showMinorLabels: true} /* ,
-                        legend: {left:{position:"bottom-left"}},
+                        dataAxis: {showMinorLabels: true}  ,
+                        legend: {left:{position:"bottom-left"}}/*,
                         start: '2014-06-09',
                         end: '2014-07-03'
                         */
