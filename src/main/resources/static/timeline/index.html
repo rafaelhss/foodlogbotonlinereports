@@ -1,48 +1,68 @@
 <html>
 <head>
+    <link href="../bower_components/vis/dist/vis.css" rel="stylesheet" type="text/css" />
+
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/moment/min/moment.min.js"></script>
+
     <script src="../bower_components/vis/dist/vis.min.js"></script>
     <script src="../bower_components/angular-visjs/angular-vis.js"></script>
 
-    <link href="../bower_components/vis/dist/vis.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
-    body, html {
-      font-family: sans-serif;
-      font-size: 20pt;
+    body {
+      font-family:  purisa, 'comic sans', cursive;
     }
 
-    .vis.timeline .item {
-      border-color: #acacac;
-      background-color: #efefef;
-      box-shadow: 5px 5px 10px rgba(128,128,128, 0.3);
+    .vis-timeline {
+      border: 2px solid purple;
+      font-family:  purisa, 'comic sans', cursive;
+      font-size: 12pt;
+      background: #ffecea;
     }
 
-
-
-
-
-    #visualization {
-      position: relative;
-      overflow: hidden;
-      height: 80vh;
+    .vis-item {
+      border-color: #F991A3;
+      background-color: pink;
+      font-size: 15pt;
+      color: purple;
+      box-shadow: 5px 5px 20px rgba(128,128,128, 0.5);
     }
 
+    .vis-item,
+    .vis-item.vis-line {
+      border-width: 3px;
+    }
+
+    .vis-item.vis-dot {
+      border-width: 10px;
+      border-radius: 10px;
+    }
+
+    .vis-item.vis-selected {
+      border-color: green;
+      background-color: lightgreen;
+    }
+
+    .vis-time-axis .vis-text {
+      color: purple;
+      padding-top: 10px;
+      padding-left: 10px;
+    }
+
+    .vis-time-axis .vis-text.vis-major {
+      font-weight: bold;
+    }
+
+    .vis-time-axis .vis-grid.vis-minor {
+      border-width: 2px;
+      border-color: pink;
+    }
+
+    .vis-time-axis .vis-grid.vis-major {
+      border-width: 2px;
+      border-color: #F991A3;
+    }
   </style>
-
-</head>
-
-<body ng-app="timelineApp" ng-controller="timelineCtrl" >
-    <div>
-        <h2>Today's Timeline</h2>
-        <jhi-alert></jhi-alert>
-
-        <br/>
-
-        <vis-timeline ng-show="true" data="timelineData" options="timelineOptions"></vis-timeline>
-
-
-    </div>
     <script>
         var app = angular.module('timelineApp', ['ngVis']);
 
@@ -76,19 +96,27 @@
             function buildTimelineInfo(data) {
                 $scope.timelineDatas = [];
                 $scope.timelineOptions = {
-                  //  height:"100%"
+                      "align": "center",
+                       "autoResize": true,
+                       "editable": true,
+                       "selectable": true,
+                       "orientation": "bottom",
+                       "showCurrentTime": true,
+                       "showMajorLabels": true,
+                       "showMinorLabels": true,
+                       "height":"800px"
                 };
 
-                var timelineData = {};
+                $scope.timelineData = {};
 
                 var items = new VisDataSet();
 
-                timelineData.items = extractItens(data.data, items);
+                $scope.timelineData.items = extractItens(data.data, items);
 
                 //define os scheduled do dia
-                timelineData.items = extractBackgroundItens(scheduledMeals, new Date(data.data[0].mealDateTime.epochSecond * 1000), timelineData.items);
+                $scope.timelineData.items = extractBackgroundItens(scheduledMeals, new Date(data.data[0].mealDateTime.epochSecond * 1000), $scope.timelineData.items);
 
-                $scope.timelineData = timelineData;
+
 
 
 
@@ -126,7 +154,7 @@
                             content:
                             ' <span style="color:#97B0F8;">' +
                             '<a  onClick="window.open(\'data:'+ item.photoContentType + ';base64,' + item.photo + '\')\">' +
-                                "<img src=\"data:" + item.photoContentType + ";base64," + item.photo + "\" style=\"max-height: 200px;\" alt=\"mealLog image\"/>" +
+                                "<img src=\"data:" + item.photoContentType + ";base64," + item.photo + "\" style=\"max-height: 30px;\" alt=\"mealLog image\"/>" +
                             '</a>' +
                              '</span>',
                             start: start,
@@ -137,17 +165,23 @@
                     return items;
                 }
             }
-
-
-
-
-
         });
-
-
-
-
     </script>
+
+
+</head>
+
+<body ng-app="timelineApp" ng-controller="timelineCtrl" ng-cloak >
+    <div>
+        <h2>Today's Timeline</h2>
+        <jhi-alert></jhi-alert>
+
+        <br/>
+
+        <vis-timeline ng-show="true" data="timelineData" options="timelineOptions"></vis-timeline>
+
+
+    </div>
 
 </body>
 </html>
