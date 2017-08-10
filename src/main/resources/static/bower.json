@@ -17,7 +17,10 @@
   ],
   "dependencies": {
     "vis": "^4.20.1",
-    "jquery": "^3.2.1"
+    "jquery": "^3.2.1",
+    "angular-visjs": "^4.16.0",
+    "moment": "^2.18.1",
+    "angular": "^1.6.5"
   },
   "resolutions": {
     "vis": "^4.20.1"
