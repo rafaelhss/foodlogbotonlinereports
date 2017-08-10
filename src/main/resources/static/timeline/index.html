@@ -1,14 +1,24 @@
 <html>
 <head>
     <link href="../bower_components/vis/dist/vis.css" rel="stylesheet" type="text/css" />
+    <link href="../bower_components/vis/dist/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
 
-    <script src="../bower_components/angular/angular.js"></script>
-    <script src="../bower_components/moment/min/moment.min.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/vis/dist/vis.js"></script>
 
-    <script src="../bower_components/vis/dist/vis.min.js"></script>
-    <script src="../bower_components/angular-visjs/angular-vis.js"></script>
+
 
     <style type="text/css">
+    .score{
+        width: 220px;
+        height: 220px;
+        text-align: center;
+    }
+    img{
+        width: 200px;
+        height: 200px;
+    }
+
     body {
       font-family:  purisa, 'comic sans', cursive;
     }
@@ -63,128 +73,103 @@
       border-color: #F991A3;
     }
   </style>
-    <script>
-        var app = angular.module('timelineApp', ['ngVis']);
-
-        app.controller('timelineCtrl', function($scope, $http, VisDataSet, $location) {
-
-            //primeiro busca os scheduled para fazer os background, depois busca os dias.
-            var scheduledMeals = [];
-            $http.get("/scheduled-meals").then(function(data){
-                scheduledMeals = data.data;
-                console.log(scheduledMeals);
-                loadAll();
-            },  function(error){
-                AlertService.error(error.data.message);
-                console.log(error)
-            });
 
 
-            function loadAll () {
-                $http.get("/meal-log")
-                    .then(
-                        function(data){
-                            console.log(data);
-                            buildTimelineInfo(data);
-                        },
-                        function(error){
-                            console.log(error);
-                        }
-                    );
-            }
-
-            function buildTimelineInfo(data) {
-                $scope.timelineDatas = [];
-                $scope.timelineOptions = {
-                      "align": "center",
-                       "autoResize": true,
-                       "editable": true,
-                       "selectable": true,
-                       "orientation": "bottom",
-                       "showCurrentTime": true,
-                       "showMajorLabels": true,
-                       "showMinorLabels": true,
-                       "height":"800px"
-                };
-
-                $scope.timelineData = {};
-
-                var items = new VisDataSet();
-
-                $scope.timelineData.items = extractItens(data.data, items);
-
-                //define os scheduled do dia
-                $scope.timelineData.items = extractBackgroundItens(scheduledMeals, new Date(data.data[0].mealDateTime.epochSecond * 1000), $scope.timelineData.items);
-
-
-
-
-
-                function extractBackgroundItens(scheduledMeals, mealLogDayDate, items){
-                    scheduledMeals.forEach(function(item,i){
-
-                        var data = mealLogDayDate;
-                        data.setHours(item.targetTime.split(":")[0]);
-                        data.setMinutes(item.targetTime.split(":")[1]);
-
-
-
-                        var start = new Date(data.getTime() - (20*60*1000) );
-                        var end = new Date(data.getTime() + (20*60*1000) );
-                                                items.add({
-                                                    id: i+items.length,
-                                                    content:
-                                                    ' <span style="color:#97B0F8;">' +
-                                                    item.name +
-                                                    '</span>',
-                                                    start: start,
-                                                    end: end,
-                                                    type: 'background'
-                                                    });
-                    });
-                    return items;
-                }
-
-                function extractItens(data) {
-                    var items = new VisDataSet();
-                    data.forEach(function(item, i){
-                        var start = new Date(item.mealDateTime.epochSecond * 1000);
-                        items.add({
-                            id: i,
-                            content:
-                            '<table><tr><td>' +
-                            ' <span style="color:#97B0F8;">' +
-                            '<a  onClick="window.open(\'data:'+ item.photoContentType + ';base64,' + item.photo + '\')\">' +
-                                "<img src=\"data:" + item.photoContentType + ";base64," + item.photo + "\" style=\"height: 250px;\" alt=\"mealLog image\"/>" +
-                            '</a>' +
-                             '</span>'+
-                             '</td></tr></table>',
-
-                            start: start,
-
-                            type: 'box'
-                            });
-                    })
-                    return items;
-                }
-            }
-        });
-    </script>
 
 
 </head>
 
-<body ng-app="timelineApp" ng-controller="timelineCtrl" ng-cloak >
+<body>
     <div>
         <h2>Today's Timeline</h2>
-        <jhi-alert></jhi-alert>
 
         <br/>
 
-        <vis-timeline ng-show="true" data="timelineData" options="timelineOptions"></vis-timeline>
+        <div id="visualization"></div>
 
 
     </div>
 
 </body>
+<script>
+
+
+
+            //primeiro busca os scheduled para fazer os background, depois busca os dias.
+            var scheduledMeals = [];
+            $.get("/scheduled-meals",function(data){
+                scheduledMeals = data;
+                console.log('scheduledMeals');
+                console.log(scheduledMeals);
+                loadAll();
+            });
+
+
+            function loadAll () {
+                $.get("/meal-log",function(data){
+                    console.log('data');
+                    console.log(data);
+
+                    // DOM element where the Timeline will be attached
+                    var container = document.getElementById('visualization');
+
+                    // Create a DataSet (allows two way data-binding)
+                    var items = buildTimelineInfo(data);
+
+                    // Create a Timeline
+                    var timeline = new vis.Timeline(container, items);
+                });
+
+
+                function buildTimelineInfo(data) {
+                    var items = extractItens(data, items);
+
+                    //define os scheduled do dia
+                    items = extractBackgroundItens(scheduledMeals, new Date(data[0].mealDateTime.epochSecond * 1000), items);
+
+                    return items;
+
+                    function extractBackgroundItens(scheduledMeals, mealLogDayDate, items){
+                        scheduledMeals.forEach(function(item,i){
+                            var data = mealLogDayDate;
+                            data.setHours(item.targetTime.split(":")[0]);
+                            data.setMinutes(item.targetTime.split(":")[1]);
+
+                            var start = new Date(data.getTime() - (20*60*1000) );
+                            var end = new Date(data.getTime() + (20*60*1000) );
+                            items.add({
+                                id: i+items.length,
+                                start: start,
+                                end: end,
+                                type: 'background',
+                                content: item.name
+                            });
+                        });
+                        return items;
+                    }
+
+                    function extractItens(data) {
+                        var items = new vis.DataSet();
+                        data.forEach(function(item, i){
+                            var start = new Date(item.mealDateTime.epochSecond * 1000);
+                            items.add({
+                                id: i,
+                                start: start,
+                                photoContentType: item.photoContentType,
+                                photo: item.photo,
+                                type: 'box',
+                                content: '<table class="score">' +
+                                            '<tr>' +
+                                                '<td><img src="data:' + item.photoContentType + ';base64,'+ item.photo + '"  alt="mealLog image"/></td>' +
+                                            '</tr>' +
+                                         '</table>'
+                                });
+                        })
+                        return items;
+                   }
+                }
+            }
+
+
+</script>
 </html>
