@@ -1,70 +1,4 @@
-<html>
-<head>
-    <link href="../bower_components/vis/dist/vis.css" rel="stylesheet" type="text/css" />
-
-    <script src="../bower_components/angular/angular.js"></script>
-    <script src="../bower_components/moment/min/moment.min.js"></script>
-
-    <script src="../bower_components/vis/dist/vis.min.js"></script>
-    <script src="../bower_components/angular-visjs/angular-vis.js"></script>
-
-    <style type="text/css">
-    body {
-      font-family:  purisa, 'comic sans', cursive;
-    }
-
-    .vis-timeline {
-      border: 2px solid purple;
-      font-family:  purisa, 'comic sans', cursive;
-      font-size: 12pt;
-      background: #ffecea;
-    }
-
-    .vis-item {
-      border-color: #F991A3;
-      background-color: pink;
-      font-size: 15pt;
-      color: purple;
-      box-shadow: 5px 5px 20px rgba(128,128,128, 0.5);
-    }
-
-    .vis-item,
-    .vis-item.vis-line {
-      border-width: 3px;
-    }
-
-    .vis-item.vis-dot {
-      border-width: 10px;
-      border-radius: 10px;
-    }
-
-    .vis-item.vis-selected {
-      border-color: green;
-      background-color: lightgreen;
-    }
-
-    .vis-time-axis .vis-text {
-      color: purple;
-      padding-top: 10px;
-      padding-left: 10px;
-    }
-
-    .vis-time-axis .vis-text.vis-major {
-      font-weight: bold;
-    }
-
-    .vis-time-axis .vis-grid.vis-minor {
-      border-width: 2px;
-      border-color: pink;
-    }
-
-    .vis-time-axis .vis-grid.vis-major {
-      border-width: 2px;
-      border-color: #F991A3;
-    }
-  </style>
-    <script>
-        var app = angular.module('timelineApp', ['ngVis']);
+var app = angular.module('timelineApp', ['ngVis']);
 
         app.controller('timelineCtrl', function($scope, $http, VisDataSet, $location) {
 
@@ -146,20 +80,17 @@
                 }
 
                 function extractItens(data) {
-                    var items = new VisDataSet();
+                    var items = new vis.DataSet();
                     data.forEach(function(item, i){
                         var start = new Date(item.mealDateTime.epochSecond * 1000);
                         items.add({
                             id: i,
                             content:
-                            '<table><tr><td>' +
                             ' <span style="color:#97B0F8;">' +
                             '<a  onClick="window.open(\'data:'+ item.photoContentType + ';base64,' + item.photo + '\')\">' +
-                                "<img src=\"data:" + item.photoContentType + ";base64," + item.photo + "\" style=\"height: 250px;\" alt=\"mealLog image\"/>" +
+                                "<img src=\"data:" + item.photoContentType + ";base64," + item.photo + "\" style=\"max-height: 30px;\" alt=\"mealLog image\"/>" +
                             '</a>' +
-                             '</span>'+
-                             '</td></tr></table>',
-
+                             '</span>',
                             start: start,
 
                             type: 'box'
@@ -169,22 +100,3 @@
                 }
             }
         });
-    </script>
-
-
-</head>
-
-<body ng-app="timelineApp" ng-controller="timelineCtrl" ng-cloak >
-    <div>
-        <h2>Today's Timeline</h2>
-        <jhi-alert></jhi-alert>
-
-        <br/>
-
-        <vis-timeline ng-show="true" data="timelineData" options="timelineOptions"></vis-timeline>
-
-
-    </div>
-
-</body>
-</html>
