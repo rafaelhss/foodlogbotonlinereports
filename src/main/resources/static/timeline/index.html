@@ -92,7 +92,28 @@
 
 </body>
 <script>
+            function getUrlParameter(param, dummyPath) {
+                    var sPageURL = dummyPath || window.location.search.substring(1),
+                        sURLVariables = sPageURL.split(/[&||?]/),
+                        res;
 
+                    for (var i = 0; i < sURLVariables.length; i += 1) {
+                        var paramName = sURLVariables[i],
+                            sParameterName = (paramName || '').split('=');
+
+                        if (sParameterName[0] === param) {
+                            res = sParameterName[1];
+                        }
+                    }
+
+                    return res;
+            }
+
+            var utcOffset = 0;
+            if(getUrlParameter('utcOffset')){
+                utcOffset = getUrlParameter('utcOffset');
+            }
+            var utcOffsetMillis = (Number(utcOffset) * 60 * 60 * 1000)
 
 
             //primeiro busca os scheduled para fazer os background, depois busca os dias.
@@ -103,6 +124,7 @@
                 console.log(scheduledMeals);
                 loadAll();
             });
+
 
 
             function loadAll () {
@@ -125,7 +147,7 @@
                     var items = extractItens(data, items);
 
                     //define os scheduled do dia
-                    items = extractBackgroundItens(scheduledMeals, new Date(data[0].mealDateTime.epochSecond * 1000), items);
+                    items = extractBackgroundItens(scheduledMeals, new Date((data[0].mealDateTime.epochSecond * 1000) + utcOffsetMillis), items);
 
                     return items;
 
@@ -151,7 +173,7 @@
                     function extractItens(data) {
                         var items = new vis.DataSet();
                         data.forEach(function(item, i){
-                            var start = new Date(item.mealDateTime.epochSecond * 1000);
+                            var start = new Date((item.mealDateTime.epochSecond * 1000) + utcOffsetMillis);
                             items.add({
                                 id: i,
                                 start: start,
