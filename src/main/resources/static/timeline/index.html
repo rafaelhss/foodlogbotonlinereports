@@ -9,6 +9,13 @@
 
 
     <style type="text/css">
+
+    .box_rotate {
+            -moz-transform: rotate(90deg);  /* FF3.5+ */
+            -o-transform: rotate(90deg);  /* Opera 10.5 */
+            -webkit-transform: rotate(90deg);  /* Saf3.1+, Chrome */
+    }
+
     .score{
         width: 220px;
         height: 220px;
@@ -164,7 +171,7 @@
                                 start: start,
                                 end: end,
                                 type: 'background',
-                                content: item.name
+                                content: '<div class="box_rotate">' +  item.name + '</div>'
                             });
                         });
                         return items;
