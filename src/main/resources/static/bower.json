@@ -17,8 +17,7 @@
   ],
   "dependencies": {
     "vis": "^4.20.1",
-    "angular-visjs": "angular-vis#^4.0.2",
-    "moment": "momentjs#^2.18.1"
+    "jquery": "^3.2.1"
   },
   "resolutions": {
     "vis": "^4.20.1"
