@@ -154,7 +154,7 @@
                     var items = extractItens(data, items);
 
                     //define os scheduled do dia
-                    items = extractBackgroundItens(scheduledMeals, new Date((data[0].mealDateTime.epochSecond * 1000) + utcOffsetMillis), items);
+                    items = extractBackgroundItens(scheduledMeals, new Date((data[data.length-1].mealDateTime.epochSecond * 1000) + utcOffsetMillis), items);
 
                     return items;
 
