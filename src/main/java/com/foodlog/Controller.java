@@ -1,7 +1,9 @@
 package com.foodlog;
 
-import com.foodlog.timeline.entity.MealLog;
-import com.foodlog.timeline.entity.ScheduledMeal;
+import com.foodlog.dayStats.DayStats;
+import com.foodlog.dayStats.DayStatsService;
+import com.foodlog.entity.MealLog;
+import com.foodlog.entity.ScheduledMeal;
 import com.foodlog.timeline.repository.ScheduledMealRepository;
 import com.foodlog.timeline.service.MealLogDayService;
 import com.foodlog.weight.Weight;
@@ -25,6 +27,9 @@ public class Controller {
     @Autowired
     private ScheduledMealRepository scheduledMealRepository;
 
+    @Autowired
+    private DayStatsService dayStatsService;
+
 
     @RequestMapping("/weight")
     public List<Weight> listWeights(@RequestParam(value="patient") String patient) {
@@ -40,5 +45,11 @@ public class Controller {
     public List<ScheduledMeal> getAllScheduledMeals() {
         return scheduledMealRepository.findByOrderByTargetTime();
     }
+
+    @RequestMapping("/day-stats")
+    public DayStats getDayStats(){
+        return dayStatsService.generateStats();
+    }
+
 
 }

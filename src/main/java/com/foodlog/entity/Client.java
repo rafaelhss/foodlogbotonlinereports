@@ -1,4 +1,4 @@
-package com.foodlog.timeline.entity;
+package com.foodlog.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

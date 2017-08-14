@@ -2,7 +2,7 @@ package com.foodlog.timeline.service;
 
 
 import com.foodlog.config.BatchConfigs;
-import com.foodlog.timeline.entity.MealLog;
+import com.foodlog.entity.MealLog;
 import com.foodlog.timeline.repository.MealLogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 

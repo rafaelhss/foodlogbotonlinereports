@@ -1,6 +1,6 @@
 package com.foodlog.timeline.repository;
 
-import com.foodlog.timeline.entity.ScheduledMeal;
+import com.foodlog.entity.ScheduledMeal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

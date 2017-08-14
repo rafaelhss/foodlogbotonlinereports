@@ -88,8 +88,22 @@
 
 <body>
     <div>
-        <h2>Today's Timeline</h2>
 
+        <div style="padding:10px">
+            <div style="float: left;">
+                <h2>Today's Timeline</h2>
+            </div>
+            <div style="float: right; " >
+                <ul id="dayPenalties">
+
+                </ul>
+            </div>
+            <div style="float: right;" class="vis-timeline vis-item">
+                <div style=" text-align: center; font-size: 70px;" id="dayScore">58</div>
+                <div style=" text-align: center;">Today's score</div>
+            </div>
+            <br style="clear: both;" />
+        </div>
         <br/>
 
         <div id="visualization"></div>
@@ -99,6 +113,31 @@
 
 </body>
 <script>
+
+    //score
+    function getScoreData(){
+        $.get("/day-stats",function(data){
+                stats = data;
+                var score = document.getElementById("dayScore");
+                score.innerHTML = stats.dayScore.score;
+
+                var penalties = document.getElementById("dayPenalties");
+                stats.dayScore.penalties.forEach(function(item){
+                    penalties.innerHTML += "<li>" + item +"</li>";
+                })
+
+
+            });
+
+    }
+
+    getScoreData();
+
+
+    //fim score
+
+
+
             function getUrlParameter(param, dummyPath) {
                     var sPageURL = dummyPath || window.location.search.substring(1),
                         sURLVariables = sPageURL.split(/[&||?]/),

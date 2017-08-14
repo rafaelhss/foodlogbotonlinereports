@@ -1,4 +1,4 @@
-package com.foodlog.timeline.entity;
+package com.foodlog.entity;
 
 
 import javax.persistence.*;

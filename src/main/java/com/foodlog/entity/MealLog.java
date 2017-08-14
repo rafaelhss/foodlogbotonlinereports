@@ -1,7 +1,5 @@
-package com.foodlog.timeline.entity;
+package com.foodlog.entity;
 
-
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
