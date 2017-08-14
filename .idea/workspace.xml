@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a34cfa9-9837-4ee0-9de1-736647c6c0ef" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../src/main/java/com/foodlog/dayStats/DayStats.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../src/main/java/com/foodlog/timeline/entity/Client.java" afterPath="$PROJECT_DIR$/../src/main/java/com/foodlog/entity/Client.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../src/main/java/com/foodlog/timeline/entity/MealLog.java" afterPath="$PROJECT_DIR$/../src/main/java/com/foodlog/entity/MealLog.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../src/main/java/com/foodlog/timeline/entity/ScheduledMeal.java" afterPath="$PROJECT_DIR$/../src/main/java/com/foodlog/entity/ScheduledMeal.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../.idea/workspace.xml" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../src/main/java/com/foodlog/Controller.java" afterPath="$PROJECT_DIR$/../src/main/java/com/foodlog/Controller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../src/main/java/com/foodlog/timeline/repository/MealLogRepository.java" afterPath="$PROJECT_DIR$/../src/main/java/com/foodlog/timeline/repository/MealLogRepository.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../src/main/java/com/foodlog/timeline/repository/ScheduledMealRepository.java" afterPath="$PROJECT_DIR$/../src/main/java/com/foodlog/timeline/repository/ScheduledMealRepository.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../src/main/java/com/foodlog/timeline/service/MealLogDayService.java" afterPath="$PROJECT_DIR$/../src/main/java/com/foodlog/timeline/service/MealLogDayService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../src/main/resources/application.properties" afterPath="$PROJECT_DIR$/../src/main/resources/application.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../src/main/resources/static/timeline/index.html" afterPath="$PROJECT_DIR$/../src/main/resources/static/timeline/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/main/resources/application.properties" afterPath="$PROJECT_DIR$/../../src/main/resources/application.properties" />
     </list>
     <ignored path="$USER_HOME$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,10 +23,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="application.properties" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../src/main/resources/application.properties">
+        <entry file="file://$PROJECT_DIR$/../../src/main/resources/application.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="876">
-              <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+            <state relative-caret-position="546">
+              <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -53,7 +44,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -73,15 +64,16 @@
         <option value="$USER_HOME$/src/main/resources/static/index.html" />
         <option value="$USER_HOME$/src/main/resources/application.properties" />
         <option value="$USER_HOME$/src/main/resources/static/index.html" />
+        <option value="$PROJECT_DIR$/../../../../../src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/../../../../src/main/java/com/foodlog/Controller.java" />
+        <option value="$PROJECT_DIR$/../../../../src/main/java/com/foodlog/timeline/repository/MealLogRepository.java" />
+        <option value="$PROJECT_DIR$/../../../../src/main/java/com/foodlog/dayStats/DayScore.java" />
+        <option value="$PROJECT_DIR$/../../../../src/main/java/com/foodlog/dayStats/DayStats.java" />
+        <option value="$PROJECT_DIR$/../../../../src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/../../../../src/main/resources/static/timeline/index.html" />
+        <option value="$PROJECT_DIR$/../../../../src/main/java/com/foodlog/dayStats/DayStatsService.java" />
         <option value="$PROJECT_DIR$/../../../src/main/resources/application.properties" />
-        <option value="$PROJECT_DIR$/../../src/main/java/com/foodlog/Controller.java" />
-        <option value="$PROJECT_DIR$/../../src/main/java/com/foodlog/timeline/repository/MealLogRepository.java" />
-        <option value="$PROJECT_DIR$/../../src/main/java/com/foodlog/dayStats/DayScore.java" />
-        <option value="$PROJECT_DIR$/../../src/main/java/com/foodlog/dayStats/DayStats.java" />
         <option value="$PROJECT_DIR$/../../src/main/resources/application.properties" />
-        <option value="$PROJECT_DIR$/../../src/main/resources/static/timeline/index.html" />
-        <option value="$PROJECT_DIR$/../../src/main/java/com/foodlog/dayStats/DayStatsService.java" />
-        <option value="$PROJECT_DIR$/../src/main/resources/application.properties" />
       </list>
     </option>
   </component>
@@ -93,10 +85,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="64" />
-    <option name="y" value="-11" />
-    <option name="width" value="1857" />
-    <option name="height" value="1092" />
+    <option name="x" value="65" />
+    <option name="y" value="-4" />
+    <option name="width" value="1855" />
+    <option name="height" value="1084" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -114,7 +106,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -324,6 +315,7 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -609,7 +601,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
+    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -620,8 +612,8 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36085626" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -631,8 +623,8 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -684,20 +676,21 @@
     <entry file="file://$USER_HOME$/src/main/resources/static/index.html" />
     <entry file="file://$USER_HOME$/src/main/resources/application.properties" />
     <entry file="file://$USER_HOME$/src/main/resources/static/index.html" />
+    <entry file="file://$PROJECT_DIR$/../../../../../src/main/resources/application.properties" />
+    <entry file="file://$PROJECT_DIR$/../../../../src/main/java/com/foodlog/timeline/repository/MealLogRepository.java" />
+    <entry file="file://$PROJECT_DIR$/../../../../src/main/java/com/foodlog/dayStats/DayScore.java" />
+    <entry file="file://$PROJECT_DIR$/../../../../src/main/java/com/foodlog/dayStats/DayStats.java" />
+    <entry file="file://$PROJECT_DIR$/../../../../src/main/resources/application.properties" />
+    <entry file="file://$PROJECT_DIR$/../../../../src/main/resources/static/index.html" />
+    <entry file="file://$PROJECT_DIR$/../../../../src/main/resources/static/timeline/app.js" />
+    <entry file="file://$PROJECT_DIR$/../../../../src/main/resources/static/timeline/index.html" />
+    <entry file="file://$PROJECT_DIR$/../../../../src/main/java/com/foodlog/Controller.java" />
+    <entry file="file://$PROJECT_DIR$/../../../../src/main/java/com/foodlog/dayStats/DayStatsService.java" />
     <entry file="file://$PROJECT_DIR$/../../../src/main/resources/application.properties" />
-    <entry file="file://$PROJECT_DIR$/../../src/main/java/com/foodlog/timeline/repository/MealLogRepository.java" />
-    <entry file="file://$PROJECT_DIR$/../../src/main/java/com/foodlog/dayStats/DayScore.java" />
-    <entry file="file://$PROJECT_DIR$/../../src/main/java/com/foodlog/dayStats/DayStats.java" />
-    <entry file="file://$PROJECT_DIR$/../../src/main/resources/application.properties" />
-    <entry file="file://$PROJECT_DIR$/../../src/main/resources/static/index.html" />
-    <entry file="file://$PROJECT_DIR$/../../src/main/resources/static/timeline/app.js" />
-    <entry file="file://$PROJECT_DIR$/../../src/main/resources/static/timeline/index.html" />
-    <entry file="file://$PROJECT_DIR$/../../src/main/java/com/foodlog/Controller.java" />
-    <entry file="file://$PROJECT_DIR$/../../src/main/java/com/foodlog/dayStats/DayStatsService.java" />
-    <entry file="file://$PROJECT_DIR$/../src/main/resources/application.properties">
+    <entry file="file://$PROJECT_DIR$/../../src/main/resources/application.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="876">
-          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        <state relative-caret-position="546">
+          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
         </state>
       </provider>
