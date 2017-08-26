@@ -1,8 +1,10 @@
 package com.foodlog.weight;
 
 
+import com.foodlog.entity.user.User;
+
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -32,8 +34,11 @@ public class Weight implements Serializable {
     @Column(name = "jhi_comment")
     private String comment;
 
-    @Column(name = "update_id", nullable = true, unique = true)
+    @Column(name = "update_id")
     private Long updateId;
+
+    @ManyToOne
+    private User user;
 
     public Long getId() {
         return id;
@@ -93,6 +98,19 @@ public class Weight implements Serializable {
 
     public void setUpdateId(Long updateId) {
         this.updateId = updateId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Weight user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

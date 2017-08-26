@@ -3,6 +3,8 @@ package com.foodlog.timeline.service;
 
 import com.foodlog.config.BatchConfigs;
 import com.foodlog.entity.MealLog;
+import com.foodlog.entity.user.User;
+import com.foodlog.entity.user.UserRepository;
 import com.foodlog.timeline.repository.MealLogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,7 +24,10 @@ public class MealLogDayService {
     @Autowired
     private MealLogRepository mealLogRepository;
 
-    public List<MealLog> findAll() {
+    @Autowired
+    private UserRepository userRepository;
+
+    public List<MealLog> findAll(User currentUser) {
 
 
         ZonedDateTime baseDate = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
@@ -41,10 +46,11 @@ public class MealLogDayService {
         List<MealLog> result = new ArrayList<>();
 
         MealLog lastProcessed = null;
-        for (MealLog mealLog : mealLogRepository.findByMealDateTimeBetweenOrderByMealDateTimeDesc(yesterday, tomorrow)) {
+
+       for (MealLog mealLog : mealLogRepository.findByUserAndMealDateTimeBetweenOrderByMealDateTimeDesc(currentUser, yesterday, tomorrow)) {
             System.out.println(mealLog.getId() + " " + mealLog.getMealDateTime() + "     " + mealLog.getMealDateTime().atZone(ZoneId.of("America/Sao_Paulo")));
 
-            if(lastProcessed == null){
+            if (lastProcessed == null) {
                 lastProcessed = mealLog;
             }
 
@@ -52,7 +58,7 @@ public class MealLogDayService {
 
             System.out.println("Achando a noite. " + mealLog.getMealDateTime() + "(epalsed: " + elapsedMealTime + "): " + (elapsedMealTime < BatchConfigs.SLEEP_INTERVAL));
             // Nao achei a noite, entao computa. Isso eh pra atender casos em que come de madruga
-            if (elapsedMealTime < BatchConfigs.SLEEP_INTERVAL){
+            if (elapsedMealTime < BatchConfigs.SLEEP_INTERVAL) {
 
                 result.add(mealLog);
 
@@ -62,9 +68,6 @@ public class MealLogDayService {
                 break;
             }
         }
-
-
-
 
         return result;
     }

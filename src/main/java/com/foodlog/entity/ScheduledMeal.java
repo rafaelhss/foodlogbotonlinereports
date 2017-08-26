@@ -1,6 +1,8 @@
 package com.foodlog.entity;
 
 
+import com.foodlog.entity.user.User;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -35,7 +37,7 @@ public class ScheduledMeal implements Serializable {
     private String targetTime;
 
     @ManyToOne
-    private Client client;
+    private User user;
 
     public Long getId() {
         return id;
@@ -84,17 +86,17 @@ public class ScheduledMeal implements Serializable {
         this.targetTime = targetTime;
     }
 
-    public Client getClient() {
-        return client;
+    public User getUser() {
+        return user;
     }
 
-    public ScheduledMeal client(Client client) {
-        this.client = client;
+    public ScheduledMeal user(User user) {
+        this.user = user;
         return this;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

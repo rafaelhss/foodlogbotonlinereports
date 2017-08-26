@@ -4,6 +4,8 @@ import com.foodlog.dayStats.DayStats;
 import com.foodlog.dayStats.DayStatsService;
 import com.foodlog.entity.MealLog;
 import com.foodlog.entity.ScheduledMeal;
+import com.foodlog.entity.user.User;
+import com.foodlog.entity.user.UserRepository;
 import com.foodlog.timeline.repository.ScheduledMealRepository;
 import com.foodlog.timeline.service.MealLogDayService;
 import com.foodlog.weight.Weight;
@@ -30,25 +32,30 @@ public class Controller {
     @Autowired
     private DayStatsService dayStatsService;
 
+    @Autowired
+    private UserRepository userRepository;
+
 
     @RequestMapping("/weight")
-    public List<Weight> listWeights(@RequestParam(value="patient") String patient) {
-        return weightRepository.findTop30ByOrderByWeightDateTimeDesc();
+    public List<Weight> listWeights(@RequestParam(value="userid") Long userid) {
+        User user = userRepository.findOne(userid);
+        return weightRepository.findTop30ByUserOrderByWeightDateTimeDesc(user);
     }
 
     @RequestMapping("/meal-log")
-    public List<MealLog> getAllMealLogDays() {
-        return mealLogDayService.findAll();
+    public List<MealLog> getAllMealLogDays(@RequestParam(value="userid") Long userid) {
+        return mealLogDayService.findAll(userRepository.findOne(userid));
     }
 
     @RequestMapping("/scheduled-meals")
-    public List<ScheduledMeal> getAllScheduledMeals() {
-        return scheduledMealRepository.findByOrderByTargetTime();
+    public List<ScheduledMeal> getAllScheduledMeals(@RequestParam(value="userid") Long userid) {
+        return scheduledMealRepository.findByUserOrderByTargetTime(userRepository.findOne(userid));
     }
 
     @RequestMapping("/day-stats")
-    public DayStats getDayStats(){
-        return dayStatsService.generateStats();
+    public DayStats getDayStats(@RequestParam(value="userid") Long userid){
+
+        return dayStatsService.generateStats(userRepository.findOne(userid));
     }
 
 

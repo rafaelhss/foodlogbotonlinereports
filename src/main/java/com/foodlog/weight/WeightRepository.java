@@ -1,6 +1,7 @@
 package com.foodlog.weight;
 
 
+import com.foodlog.entity.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,6 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface WeightRepository extends JpaRepository<Weight,Long> {
-    List<Weight> findTop30ByOrderByWeightDateTimeDesc();
 
+    List<Weight> findTop30ByUserOrderByWeightDateTimeDesc(User user);
 }

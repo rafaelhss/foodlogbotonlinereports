@@ -2,6 +2,7 @@ package com.foodlog.dayStats;
 
 import com.foodlog.entity.MealLog;
 import com.foodlog.entity.ScheduledMeal;
+import com.foodlog.entity.user.User;
 import com.foodlog.timeline.repository.MealLogRepository;
 import com.foodlog.timeline.repository.ScheduledMealRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,8 @@ public class DayStatsService {
 
 
 
-    public DayStats generateStats() {
-        DayStats dayStats = calculateMealIntervals(new DayStats());
+    public DayStats generateStats(User currentUser) {
+        DayStats dayStats = calculateMealIntervals(new DayStats(), currentUser);
 
        int score = 100;
 
@@ -72,13 +73,13 @@ public class DayStatsService {
     }
 
 
-    private DayStats calculateMealIntervals(DayStats dayStats) {
+    private DayStats calculateMealIntervals(DayStats dayStats, User currentUser) {
 
         Instant now = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).toInstant();
         System.out.println("ZonedDateTime.now(ZoneId.of(\"America/Sao_Paulo\")):" + ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")));
         System.out.println("ZonedDateTime.now(ZoneId.of(\"America/Sao_Paulo\")).toInstant():" + ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).toInstant());
 
-        List<MealLog> mealLogs2Days = mealLogRepository.findByMealDateTimeAfterOrderByMealDateTimeDesc(now.truncatedTo(ChronoUnit.DAYS).minus(2, ChronoUnit.DAYS));
+        List<MealLog> mealLogs2Days = mealLogRepository.findByUserAndMealDateTimeAfterOrderByMealDateTimeDesc(currentUser, now.truncatedTo(ChronoUnit.DAYS).minus(2, ChronoUnit.DAYS));
         System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 
         float secondsSum = 0;
@@ -125,8 +126,8 @@ public class DayStatsService {
         if(avgSeconds > 1) {
             dayStats.setAvgSecondsBetweenMeals(avgSeconds);
             dayStats.setLoggedMeals((int) ++count);
-            dayStats.setScheduledMeals(getScheduledMeals());
-            dayStats.setScheduledAvgSecondsBetweenMeals(calcScheduledAvgIntervals());
+            dayStats.setScheduledMeals(getScheduledMeals(currentUser));
+            dayStats.setScheduledAvgSecondsBetweenMeals(calcScheduledAvgIntervals(currentUser));
             dayStats.setTreePlusHourIntervals(count3hourintervals);
             dayStats.setOnTimeMeals(countOnTime);
             dayStats.setOffTimeMeals(countOffTime);
@@ -136,13 +137,13 @@ public class DayStatsService {
         }
     }
 
-    private float calcScheduledAvgIntervals() {
+    private float calcScheduledAvgIntervals(User currentUser) {
 
         ZonedDateTime lastMealTime = null;
         float secondsSum = 0;
         float count = 0;
 
-        for(ScheduledMeal scheduledMeal:scheduledMealRepository.findByOrderByTargetTimeDesc()){
+        for(ScheduledMeal scheduledMeal:scheduledMealRepository.findByUserOrderByTargetTimeDesc(currentUser)){
             ZonedDateTime current = getZonedTargetTime(scheduledMeal);
             if(lastMealTime != null && !current.equals(lastMealTime)) {
                 float seconds = Duration.between(current, lastMealTime).getSeconds();
@@ -167,11 +168,11 @@ public class DayStatsService {
         return now.with(LocalTime.of(hour, minute));
     }
 
-    private int getScheduledMeals() {
+    private int getScheduledMeals(User currentUser) {
 
         HashMap<String,String> aux = new HashMap<>();
         int count = 0;
-        for(ScheduledMeal scheduledMeal:scheduledMealRepository.findAll()){
+        for(ScheduledMeal scheduledMeal:scheduledMealRepository.findByUserOrderByTargetTimeDesc(currentUser)){
             if (aux.get(scheduledMeal.getTargetTime()) == null){
                 aux.put(scheduledMeal.getTargetTime(),scheduledMeal.getTargetTime());
                 count++;

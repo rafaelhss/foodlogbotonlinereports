@@ -116,7 +116,7 @@
 
     //score
     function getScoreData(){
-        $.get("/day-stats",function(data){
+        $.get("/day-stats"+ window.location.href.substring(window.location.href.indexOf('?')),function(data){
                 stats = data;
                 var score = document.getElementById("dayScore");
                 score.innerHTML = stats.dayScore.score;
@@ -164,7 +164,7 @@
 
             //primeiro busca os scheduled para fazer os background, depois busca os dias.
             var scheduledMeals = [];
-            $.get("/scheduled-meals",function(data){
+            $.get("/scheduled-meals"+ window.location.href.substring(window.location.href.indexOf('?')),function(data){
                 scheduledMeals = data;
                 console.log('scheduledMeals');
                 console.log(scheduledMeals);
@@ -174,7 +174,7 @@
 
 
             function loadAll () {
-                $.get("/meal-log",function(data){
+                $.get("/meal-log"+ window.location.href.substring(window.location.href.indexOf('?')),function(data){
                     console.log('data');
                     console.log(data);
 
