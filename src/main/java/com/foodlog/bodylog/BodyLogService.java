@@ -66,6 +66,9 @@ public class BodyLogService {
             writer.finishWrite(os);
 
 
+            // eu to muito deseperado cara
+            Thread.sleep(500);
+
 
 //           String fileName = "/home/rafael/Pictures/teste.gif";
 
