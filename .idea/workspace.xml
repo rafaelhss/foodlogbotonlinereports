@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5a34cfa9-9837-4ee0-9de1-736647c6c0ef" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/foodlog/bodylog/BodyLogService.java" afterPath="$PROJECT_DIR$/src/main/java/com/foodlog/bodylog/BodyLogService.java" />
-    </list>
+    <list default="true" id="5a34cfa9-9837-4ee0-9de1-736647c6c0ef" name="Default" comment="" />
     <ignored path="$USER_HOME$/target/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
