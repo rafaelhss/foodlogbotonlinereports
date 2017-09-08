@@ -11,7 +11,7 @@ public class Sender {
 
     private String botId;
     private String UrlTemplate      = "https://api.telegram.org/bot@@BOTID@@/sendmessage?chat_id=@@CHATID@@&text=@@TEXT@@";
-    private String UrlImageTemplate = "http://requestb.in/1mhusaj1/bot@@BOTID@@/sendPhoto?chat_id=@@CHATID@@";//"http://api.telegram.org/bot@@BOTID@@/sendPhoto?chat_id=@@CHATID@@";
+    private String UrlImageTemplate = "http://api.telegram.org/bot@@BOTID@@/sendPhoto?chat_id=@@CHATID@@";
 
 
     public Sender(String botId){
