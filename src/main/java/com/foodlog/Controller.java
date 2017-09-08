@@ -1,7 +1,9 @@
 package com.foodlog;
 
+import com.foodlog.bodylog.BodyLogService;
 import com.foodlog.dayStats.DayStats;
 import com.foodlog.dayStats.DayStatsService;
+import com.foodlog.entity.BodyLogGif;
 import com.foodlog.entity.MealLog;
 import com.foodlog.entity.ScheduledMeal;
 import com.foodlog.entity.user.User;
@@ -11,9 +13,7 @@ import com.foodlog.timeline.service.MealLogDayService;
 import com.foodlog.weight.Weight;
 import com.foodlog.weight.WeightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,6 +34,16 @@ public class Controller {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BodyLogService bodyLogService;
+
+    @RequestMapping("/body-log")
+    public BodyLogGif getBodyGif(@RequestParam(value="userid") Long userid) {
+        User user = userRepository.findOne(userid);
+
+        return bodyLogService.getBodyGif(user);
+    }
 
 
     @RequestMapping("/weight")
