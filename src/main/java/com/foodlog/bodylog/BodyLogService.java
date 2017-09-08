@@ -35,7 +35,7 @@ public class BodyLogService {
     public BodyLogGif getBodyGif(User user) {
 
         try {
-           /* List<BodyLog> logs = bodyLogRepository.findByUser(user);
+            List<BodyLog> logs = bodyLogRepository.findByUser(user);
 
             // True for dither. Will use more memory and CPU
             AnimatedGIFWriter writer = new AnimatedGIFWriter(true);
@@ -65,9 +65,9 @@ public class BodyLogService {
             }
             writer.finishWrite(os);
 
-*/
 
-           String fileName = "/home/rafael/Pictures/teste.gif";
+
+//           String fileName = "/home/rafael/Pictures/teste.gif";
 
             new Sender("380968235:AAGqnrSERR8ABcw-_avcPN2ES3KH5SeZtNM").sendImage(153350155, fileName);
 
