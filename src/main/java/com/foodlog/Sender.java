@@ -31,7 +31,7 @@ public class Sender {
     public void sendImage(Integer id, String image){
         URL url = null;
         try {
-            url = new URL(UrlTemplate.replace("@@CHATID@@", id.toString()));
+            url = new URL(UrlImageTemplate.replace("@@CHATID@@", id.toString()));
 
             OkHttpClient client = new OkHttpClient();
             File file = new File(image);
