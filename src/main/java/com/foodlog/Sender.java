@@ -40,7 +40,7 @@ public class Sender {
 
             RequestBody formBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
-                    .addFormDataPart("document", null,
+                    .addFormDataPart("document", "document",
                             RequestBody.create(MediaType.parse("image/gif"), file))
 
                     .build();
