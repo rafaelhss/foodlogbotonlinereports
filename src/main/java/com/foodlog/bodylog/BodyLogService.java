@@ -41,7 +41,7 @@ public class BodyLogService {
 
             // True for dither. Will use more memory and CPU
             AnimatedGIFWriter writer = new AnimatedGIFWriter(true);
-            String fileName = "/home/rafa/Documents/Projects/foodlogbotonlinereports/foodlogbotonlinereports/target/teste2.gif";
+            String fileName = "teste.gif";
             OutputStream os = new FileOutputStream(fileName);
             // Grab the BufferedImage whatever way you can
 
@@ -67,10 +67,9 @@ public class BodyLogService {
             }
             writer.finishWrite(os);
 
-            Path path = Paths.get(fileName);
-            byte[] data = Files.readAllBytes(path);
 
-            new Sender("380968235:AAGqnrSERR8ABcw-_avcPN2ES3KH5SeZtNM").sendImage(153350155, data);
+
+            new Sender("380968235:AAGqnrSERR8ABcw-_avcPN2ES3KH5SeZtNM").sendImage(153350155, fileName);
 
             return new BodyLogGif(Files.readAllBytes(Paths.get(fileName)));
 

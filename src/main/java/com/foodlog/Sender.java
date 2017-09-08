@@ -1,9 +1,8 @@
 package com.foodlog;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import okhttp3.*;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -12,7 +11,7 @@ public class Sender {
 
     private String botId;
     private String UrlTemplate      = "https://api.telegram.org/bot@@BOTID@@/sendmessage?chat_id=@@CHATID@@&text=@@TEXT@@";
-    private String UrlImageTemplate = "https://api.telegram.org/bot@@BOTID@@/sendPhoto?chat_id=@@CHATID@@";
+    private String UrlImageTemplate = "http://api.telegram.org/bot@@BOTID@@/sendPhoto?chat_id=@@CHATID@@";
 
 
     public Sender(String botId){
@@ -29,29 +28,25 @@ public class Sender {
         BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
     }
 
-    public void sendImage(Integer id, byte[] image){
+    public void sendImage(Integer id, String image){
         URL url = null;
         try {
             url = new URL(UrlTemplate.replace("@@CHATID@@", id.toString()));
 
-            StringBuilder parameters = new StringBuilder();
+            OkHttpClient client = new OkHttpClient();
+            File file = new File(image);
 
-            parameters.append("file1=");
-            parameters.append(URLEncoder.encode(new String(image),"UTF-8"));
+            RequestBody formBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("file", "image.gif",
+                            RequestBody.create(MediaType.parse("image/gif"), file))
 
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setDoInput(true);
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            connection.setRequestProperty("charset","UTF-8");
-            connection.setRequestProperty("Content-Length",Integer.toString(parameters.toString().getBytes().length));
+                    .build();
 
-            DataOutputStream wr = new DataOutputStream(connection.getOutputStream ());
-            wr.writeBytes(parameters.toString());
-            wr.flush();
-            wr.close();
-            connection.disconnect();
+            Request request = new Request.Builder().url(url).post(formBody).build();
+
+            Response response = client.newCall(request).execute();
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
         } catch (Exception e) {
             e.printStackTrace();
         }
