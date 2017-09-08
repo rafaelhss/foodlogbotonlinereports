@@ -1,6 +1,8 @@
 package com.foodlog;
 
+import com.foodlog.util.MultipartUtility;
 import okhttp3.*;
+import sun.net.www.http.HttpClient;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -35,7 +37,7 @@ public class Sender {
         try {
             url = new URL(UrlDocumentTemplate.replace("@@CHATID@@", id.toString()));
 
-            OkHttpClient client = new OkHttpClient();
+           /* OkHttpClient client = new OkHttpClient();
             File file = new File(image);
 
             RequestBody formBody = new MultipartBody.Builder()
@@ -49,7 +51,20 @@ public class Sender {
 
             Response response = client.newCall(request).execute();
             System.out.println(response.body().string());
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);*/
+
+
+            String charset = "UTF-8";
+            String requestURL = "YOUR_URL";
+
+            MultipartUtility multipart = new MultipartUtility(requestURL, charset);
+            multipart.addFormField("param_name_1", "param_value");
+            multipart.addFormField("param_name_2", "param_value");
+            multipart.addFormField("param_name_3", "param_value");
+            multipart.addFilePart("file_param_1", new File(image));
+            String response = multipart.finish(); // response from server.
+            System.out.println(response);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
