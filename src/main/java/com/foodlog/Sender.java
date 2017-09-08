@@ -11,13 +11,13 @@ public class Sender {
 
     private String botId;
     private String UrlTemplate      = "https://api.telegram.org/bot@@BOTID@@/sendmessage?chat_id=@@CHATID@@&text=@@TEXT@@";
-    private String UrlImageTemplate = "http://api.telegram.org/bot@@BOTID@@/sendPhoto?chat_id=@@CHATID@@";
+    private String UrlDocumentTemplate = "http://api.telegram.org/bot@@BOTID@@/sendDocument?chat_id=@@CHATID@@";
 
 
     public Sender(String botId){
         this.botId = botId;
         this.UrlTemplate = UrlTemplate.replace("@@BOTID@@", botId);
-        this.UrlImageTemplate = UrlImageTemplate.replace("@@BOTID@@", botId);
+        this.UrlDocumentTemplate = UrlDocumentTemplate.replace("@@BOTID@@", botId);
 
     }
 
@@ -30,17 +30,17 @@ public class Sender {
         BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
     }
 
-    public void sendImage(Integer id, String image){
+    public void sendDocument(Integer id, String image){
         URL url = null;
         try {
-            url = new URL("https://requestb.in/1mhusaj1".replace("@@CHATID@@", id.toString()));
+            url = new URL(UrlDocumentTemplate.replace("@@CHATID@@", id.toString()));
 
             OkHttpClient client = new OkHttpClient();
             File file = new File(image);
 
             RequestBody formBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
-                    .addFormDataPart("photo", null,
+                    .addFormDataPart("document", null,
                             RequestBody.create(MediaType.parse("image/gif"), file))
 
                     .build();

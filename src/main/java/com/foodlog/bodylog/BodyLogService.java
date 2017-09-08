@@ -69,7 +69,7 @@ public class BodyLogService {
 
 //           String fileName = "/home/rafael/Pictures/teste.gif";
 
-            new Sender("380968235:AAGqnrSERR8ABcw-_avcPN2ES3KH5SeZtNM").sendImage(153350155, fileName);
+            new Sender("380968235:AAGqnrSERR8ABcw-_avcPN2ES3KH5SeZtNM").sendDocument(153350155, fileName);
 
             return new BodyLogGif(Files.readAllBytes(Paths.get(fileName)));
 
