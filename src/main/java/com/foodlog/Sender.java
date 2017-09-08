@@ -46,6 +46,7 @@ public class Sender {
             Request request = new Request.Builder().url(url).post(formBody).build();
 
             Response response = client.newCall(request).execute();
+            System.out.println(response.body().string());
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
         } catch (Exception e) {
             e.printStackTrace();

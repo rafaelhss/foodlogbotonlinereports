@@ -5,7 +5,6 @@ import com.foodlog.entity.BodyLog;
 import com.foodlog.entity.BodyLogGif;
 import com.foodlog.entity.user.User;
 import com.github.dragon66.AnimatedGIFWriter;
-import org.classpath.icedtea.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
