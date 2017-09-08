@@ -55,13 +55,10 @@ public class Sender {
 
 
             String charset = "UTF-8";
-            String requestURL = "YOUR_URL";
+            String requestURL = url.toString();
 
             MultipartUtility multipart = new MultipartUtility(requestURL, charset);
-            multipart.addFormField("param_name_1", "param_value");
-            multipart.addFormField("param_name_2", "param_value");
-            multipart.addFormField("param_name_3", "param_value");
-            multipart.addFilePart("file_param_1", new File(image));
+            multipart.addFilePart("document", new File(image));
             String response = multipart.finish(); // response from server.
             System.out.println(response);
 
