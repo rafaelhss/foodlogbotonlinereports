@@ -17,6 +17,8 @@ public class Sender {
     public Sender(String botId){
         this.botId = botId;
         this.UrlTemplate = UrlTemplate.replace("@@BOTID@@", botId);
+        this.UrlImageTemplate = UrlImageTemplate.replace("@@BOTID@@", botId);
+
     }
 
     public void sendResponse(Integer id, String text_response) throws IOException {
