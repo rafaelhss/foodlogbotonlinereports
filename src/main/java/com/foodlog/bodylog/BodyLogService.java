@@ -38,7 +38,7 @@ public class BodyLogService {
         try {
             List<BodyLog> logs = bodyLogRepository.findByUser(user);
 
-            String fileName = "/home/rafa/Documents/Projects/foodlogbotonlinereports/foodlogbotonlinereports/teste.gif";
+            String fileName = "imagem.gif";
 
 
             // True for dither. Will use more memory and CPU
@@ -160,7 +160,7 @@ public class BodyLogService {
                     num++;
                 }
             }
-            String fileName = "/home/rafa/Documents/Projects/foodlogbotonlinereports/foodlogbotonlinereports/teste.jpg";
+            String fileName = "image.jpg";
 
             System.out.println("Image concatenated: " + fileName);
 
