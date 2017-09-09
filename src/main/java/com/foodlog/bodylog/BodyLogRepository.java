@@ -17,4 +17,6 @@ import java.util.List;
 public interface BodyLogRepository extends JpaRepository<BodyLog,Long> {
 
     List<BodyLog> findByUser(User user);
+
+    List<BodyLog> findByUserOrderByBodyLogDatetime(User user);
 }

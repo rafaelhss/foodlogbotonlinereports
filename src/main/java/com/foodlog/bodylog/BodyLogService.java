@@ -2,7 +2,7 @@ package com.foodlog.bodylog;
 
 import com.foodlog.Sender;
 import com.foodlog.entity.BodyLog;
-import com.foodlog.entity.BodyLogGif;
+import com.foodlog.entity.BodyLogImage;
 import com.foodlog.entity.user.User;
 import com.github.dragon66.AnimatedGIFWriter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +11,18 @@ import org.springframework.stereotype.Service;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
 import java.util.Locale;
+
+import static java.time.Instant.now;
 
 /**
  * Created by rafa on 07/09/17.
@@ -32,7 +33,7 @@ public class BodyLogService {
     @Autowired
     BodyLogRepository bodyLogRepository;
 
-    public BodyLogGif getBodyGif(User user) {
+    public BodyLogImage getBodyGif(User user) {
 
         try {
             List<BodyLog> logs = bodyLogRepository.findByUser(user);
@@ -59,7 +60,7 @@ public class BodyLogService {
                                 .withZone( ZoneId.systemDefault() );
                 String text = formatter.format(bodyLog.getBodyLogDatetime());
 
-                insertDateToImage(frame, text);
+                frame = insertTextToImage(frame, text);
 
                 writer.writeFrame(os, frame,2500);
                 System.out.println("opa");
@@ -69,7 +70,7 @@ public class BodyLogService {
 
             new Sender("380968235:AAGqnrSERR8ABcw-_avcPN2ES3KH5SeZtNM").sendDocument(153350155, fileName);
 
-            return new BodyLogGif(Files.readAllBytes(Paths.get(fileName)));
+            return new BodyLogImage(Files.readAllBytes(Paths.get(fileName)));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,7 +79,7 @@ public class BodyLogService {
     }
 
 
-    private void insertDateToImage(BufferedImage frame, String text) {
+    private BufferedImage insertTextToImage(BufferedImage frame, String text) {
         Graphics2D g2d = frame.createGraphics();
 
         g2d.setFont(new Font("Arial", Font.PLAIN, 60));
@@ -100,5 +101,115 @@ public class BodyLogService {
         g2d.drawString(text, 0, g2d.getFontMetrics().getHeight());
 
         g2d.dispose();
+        return frame;
+    }
+
+    public BodyLogImage getBodyPanel(User user) {
+        try {
+            int rows = 2;   //we assume the no. of rows and cols are known and each chunk has equal width and height
+            int cols = 2;
+            int chunks = rows * cols;
+
+            int chunkWidth, chunkHeight;
+            int type;
+
+
+            //fetching image files
+            List<BodyLog> logs = bodyLogRepository.findByUserOrderByBodyLogDatetime(user);
+            if(logs.size() < chunks){
+                rows = 1;
+                cols = logs.size();
+                chunks = rows * cols;
+            }
+
+
+            //creating a bufferd image array from image files
+            BufferedImage[] buffImages = new BufferedImage[chunks];
+
+            System.out.println("logs size:" + logs.size());
+
+            //A primeira imagem eh a primeira (0 tercos)
+            //A proxima esta a 1 terco do fim
+            //A proxima esta a 2 tercos do fim
+            //a ultima eh a ultima (3 tercos)
+            for (int i = 0; i < chunks; i++) {
+                float factor = Float.valueOf((Float.valueOf(i)/Float.valueOf(chunks-1)));
+                System.out.println("factor: " + factor );
+                int index = Math.round(Float.valueOf((float) ((logs.size()-1)*factor)));
+                System.out.println("index: " + index);
+                BufferedImage img = getBufferedImage(logs.get(index));
+
+
+
+                buffImages[i] = insertDate(img, logs.get(0).getBodyLogDatetime(), logs.get(index).getBodyLogDatetime());
+            }
+
+
+
+            type = buffImages[0].getType();
+            chunkWidth = buffImages[0].getWidth();
+            chunkHeight = buffImages[0].getHeight();
+
+            //Initializing the final image
+            BufferedImage finalImg = new BufferedImage(chunkWidth * cols, chunkHeight * rows, type);
+
+            int num = 0;
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    finalImg.createGraphics().drawImage(buffImages[num], chunkWidth * j, chunkHeight * i, null);
+                    num++;
+                }
+            }
+            String fileName = "/home/rafa/Documents/Projects/foodlogbotonlinereports/foodlogbotonlinereports/teste.jpg";
+
+            System.out.println("Image concatenated: " + fileName);
+
+            ImageIO.write(finalImg, "jpeg", new File(fileName));
+            return new BodyLogImage(Files.readAllBytes(Paths.get(fileName)));
+
+
+        } catch (Exception e){
+            e.printStackTrace();
+            return  null;
+        }
+    }
+
+    private BufferedImage insertDate(BufferedImage img, Instant baseDate, Instant photoDate) {
+
+        String text = "";
+        LocalDate base = baseDate.atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate photo = photoDate.atZone(ZoneId.systemDefault()).toLocalDate();
+
+        Period p = Period.between(base, photo);
+
+        if(p.getYears() > 0){
+            if(p.getYears() > 1){
+                text += p.getYears() + " anos ";
+            } else {
+                text += p.getYears() + " ano ";
+            }
+        }
+        if(p.getMonths() > 0){
+            if(p.getMonths() > 1){
+                text += p.getMonths() + " meses ";
+            } else {
+                text += p.getMonths() + " mes ";
+            }
+        }
+        if(p.getDays() > 0){
+            if(p.getDays() > 1){
+                text += p.getDays() + " dias ";
+            } else {
+                text += p.getDays() + " dia ";
+            }
+        }
+        System.out.println("You are " + text);
+
+        return insertTextToImage(img, text);
+    }
+
+
+    private BufferedImage getBufferedImage(BodyLog log) throws IOException {
+        return ImageIO.read(new ByteArrayInputStream(log.getPhoto()));
     }
 }

@@ -3,7 +3,7 @@ package com.foodlog;
 import com.foodlog.bodylog.BodyLogService;
 import com.foodlog.dayStats.DayStats;
 import com.foodlog.dayStats.DayStatsService;
-import com.foodlog.entity.BodyLogGif;
+import com.foodlog.entity.BodyLogImage;
 import com.foodlog.entity.MealLog;
 import com.foodlog.entity.ScheduledMeal;
 import com.foodlog.entity.user.User;
@@ -39,10 +39,14 @@ public class Controller {
     private BodyLogService bodyLogService;
 
     @RequestMapping("/body-log")
-    public BodyLogGif getBodyGif(@RequestParam(value="userid") Long userid) {
+    public BodyLogImage getBodyPanel(@RequestParam(value="userid") Long userid,
+    @RequestParam(defaultValue = "panel", value="image-type") String type) {
         User user = userRepository.findOne(userid);
 
-        return bodyLogService.getBodyGif(user);
+        if(type != null && type.trim().equals("gif")){
+            return bodyLogService.getBodyGif(user);
+        }
+        return bodyLogService.getBodyPanel(user);
     }
 
 
