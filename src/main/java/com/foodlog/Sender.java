@@ -1,8 +1,8 @@
 package com.foodlog;
 
 import com.foodlog.util.MultipartUtility;
-import okhttp3.*;
-import sun.net.www.http.HttpClient;
+
+
 
 import java.io.*;
 import java.net.HttpURLConnection;

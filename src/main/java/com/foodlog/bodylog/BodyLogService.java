@@ -37,17 +37,20 @@ public class BodyLogService {
         try {
             List<BodyLog> logs = bodyLogRepository.findByUser(user);
 
+            String fileName = "/home/rafa/Documents/Projects/foodlogbotonlinereports/foodlogbotonlinereports/teste.gif";
+
+
             // True for dither. Will use more memory and CPU
             AnimatedGIFWriter writer = new AnimatedGIFWriter(true);
-            String fileName = "teste.gif";
             OutputStream os = new FileOutputStream(fileName);
             // Grab the BufferedImage whatever way you can
 
             // Use -1 for both logical screen width and height to use the first frame dimension
             writer.prepareForWrite(os, -1, -1);
 
-
             for(BodyLog bodyLog : logs) {
+
+
                 InputStream in = new ByteArrayInputStream(bodyLog.getPhoto());
                 BufferedImage frame = ImageIO.read(in);
                 DateTimeFormatter formatter =
@@ -59,18 +62,10 @@ public class BodyLogService {
                 insertDateToImage(frame, text);
 
                 writer.writeFrame(os, frame,2500);
-                // Keep adding frame here
-
                 System.out.println("opa");
             }
-            writer.finishWrite(os);
 
-
-            // eu to muito deseperado cara
-            Thread.sleep(500);
-
-
-//           String fileName = "/home/rafael/Pictures/teste.gif";
+            System.out.println("vou mandar:" + fileName);
 
             new Sender("380968235:AAGqnrSERR8ABcw-_avcPN2ES3KH5SeZtNM").sendDocument(153350155, fileName);
 
@@ -81,6 +76,7 @@ public class BodyLogService {
             return null;
         }
     }
+
 
     private void insertDateToImage(BufferedImage frame, String text) {
         Graphics2D g2d = frame.createGraphics();
