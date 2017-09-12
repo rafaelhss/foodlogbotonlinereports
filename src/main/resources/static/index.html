@@ -91,6 +91,7 @@
                 };
 
 
+                var maxWeight = 0;
                 var url = "weight" + window.location.href.substring(window.location.href.indexOf('?'));
                 $http.get(url).then(function(data){
                     var items = [];
@@ -114,6 +115,9 @@
                         items.push({x: today, y: item.value, group: period, label: {content:item.value,  xOffset: -65, className: cssclass}});
 
                         lastValue = item.value;
+                        if(item.value > maxWeight){
+                            maxWeight = item.value;
+                        }
                     })
 
                     var url = "jaca" + window.location.href.substring(window.location.href.indexOf('?'));
