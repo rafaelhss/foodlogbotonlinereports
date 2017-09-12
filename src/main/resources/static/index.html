@@ -65,10 +65,12 @@
                     groups.add({
                         id: 3,
                         content: 'Jaca',
-                        style: 'fill:red; stroke:red;',
+                        style: 'fill:red; stroke:red; stroke-width:0;fill-opacity:0.1;fill:red;',
                         options: {
                             style:'bar',
                             drawPoints: {
+                                size: 1,
+                                styles: 'fill:red; stroke:red;',
                                 style: 'square' // square, circle
                             }
                         }});
