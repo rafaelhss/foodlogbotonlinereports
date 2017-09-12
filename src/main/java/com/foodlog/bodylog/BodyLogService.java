@@ -17,12 +17,8 @@ import java.nio.file.Paths;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.List;
 import java.util.Locale;
-
-import static java.time.Instant.now;
 
 /**
  * Created by rafa on 07/09/17.
@@ -38,7 +34,7 @@ public class BodyLogService {
         try {
             List<BodyLog> logs = bodyLogRepository.findByUser(user);
 
-            String fileName = "imagem.gif";
+            String fileName = user.getId() + "imagem.gif";
 
 
             // True for dither. Will use more memory and CPU
@@ -66,9 +62,9 @@ public class BodyLogService {
                 System.out.println("opa");
             }
 
-            System.out.println("vou mandar:" + fileName);
+            //System.out.println("vou mandar:" + fileName);
 
-            new Sender("380968235:AAGqnrSERR8ABcw-_avcPN2ES3KH5SeZtNM").sendDocument(153350155, fileName);
+           // new Sender("380968235:AAGqnrSERR8ABcw-_avcPN2ES3KH5SeZtNM").sendDocument(153350155, fileName);
 
             return new BodyLogImage(Files.readAllBytes(Paths.get(fileName)));
 
@@ -160,7 +156,7 @@ public class BodyLogService {
                     num++;
                 }
             }
-            String fileName = "image.jpg";
+            String fileName = user.getId() + "image.jpg";
 
             System.out.println("Image concatenated: " + fileName);
 

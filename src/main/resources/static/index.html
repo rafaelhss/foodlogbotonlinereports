@@ -32,13 +32,9 @@
             var app = angular.module('weightApp', ['ngVis']);
             app.controller('weightCtrl', function($scope, $http, VisDataSet, $location) {
 
-            var url = "weight" + window.location.href.substring(window.location.href.indexOf('?'));
-
-            $http.get(url).then(function(data){
-                console.log("sucesso");
-                console.log(data);
-                var names = ['Morning', 'Evening', 'Night'];
-                var groups = new vis.DataSet();
+                var createGroups = function(){
+                    var names = ['Morning', 'Evening', 'Night'];
+                    var groups = new vis.DataSet();
                     groups.add({
                         id: 0,
                         content: names[0],
@@ -66,35 +62,41 @@
                             }
                         }});
 
+                    groups.add({
+                        id: 3,
+                        content: 'Jaca',
+                        style: 'fill:red; stroke:red;',
+                        options: {
+                            style:'bar',
+                            drawPoints: {
+                                style: 'square' // square, circle
+                            }
+                        }});
+
+                    return groups;
+                } //fim create groups
+
+                var groups = createGroups();
+                var utcOffset = 0;
+                if(getUrlParameter('utcOffset')){
+                    utcOffset = getUrlParameter('utcOffset');
+                }
+
+                $scope.options = {
+                    dataAxis: {showMinorLabels: true}  ,
+                    legend: {left:{position:"bottom-left"}}/*,
+                    start: '2014-06-09',
+                    end: '2014-07-03'
+                    */
+                };
 
 
+                var url = "weight" + window.location.href.substring(window.location.href.indexOf('?'));
+                $http.get(url).then(function(data){
                     var items = [];
-
                     var lastValue = 0;
-
                     data.data.reverse().forEach(function(item, index){
-                        console.log(item);
-
-                        var utcOffset = 0;
-                        if(getUrlParameter('utcOffset')){
-                            utcOffset = getUrlParameter('utcOffset');
-                        }
-
                         var today = new Date((item.weightDateTime.epochSecond * 1000) + (Number(utcOffset) * 60 * 60 * 1000));
-                        var dd = today.getDate();
-                        var mm = today.getMonth()+1; //January is 0!
-                        var yyyy = today.getFullYear();
-
-                        if(dd<10) {
-                            dd = '0'+dd
-                        }
-
-                        if(mm<10) {
-                            mm = '0'+mm
-                        }
-
-                       // today = yyyy + '-' + mm + '-' + dd;
-
                         var period = 0;
                          if (today.getHours() >= 12){
                              if (today.getHours() >= 18){
@@ -102,11 +104,7 @@
                              } else {
                                 period = 1
                              }
-
                          }
-
-                        console.log(today + " " + today.getHours() + " " + period );
-
 
                         var cssclass = "normal";
                         if(Number(item.value) > lastValue){
@@ -118,36 +116,42 @@
                         lastValue = item.value;
                     })
 
-                    $scope.data = {items: new vis.DataSet(items), groups: groups};
-                    $scope.options = {
-                        dataAxis: {showMinorLabels: true}  ,
-                        legend: {left:{position:"bottom-left"}}/*,
-                        start: '2014-06-09',
-                        end: '2014-07-03'
-                        */
-                    };
+                    var url = "jaca" + window.location.href.substring(window.location.href.indexOf('?'));
+                    $http.get(url).then(function(data){
+                        data.data.reverse().forEach(function(item, index){
 
-            }, function(error){
-                console.log("ERROR");
-                console.log(error);
-            });
+                            var today = new Date((item.jacaDateTime.epochSecond * 1000) + (Number(utcOffset) * 60 * 60 * 1000));
+                            var cssclass = "normal";
+                            items.push({x: today, y: 100, group: 3, label: {content:'Jaca',  xOffset: -20, className: cssclass}});
+                        })
 
-            function getUrlParameter(param, dummyPath) {
-                    var sPageURL = dummyPath || window.location.search.substring(1),
-                        sURLVariables = sPageURL.split(/[&||?]/),
-                        res;
+                        $scope.data = {items: new vis.DataSet(items), groups: groups};
 
-                    for (var i = 0; i < sURLVariables.length; i += 1) {
-                        var paramName = sURLVariables[i],
-                            sParameterName = (paramName || '').split('=');
+                    }, function(error){
+                        console.log("erro jaca")
+                        console.log(error);
+                    })
+                }, function(error){
+                    console.log("ERROR");
+                    console.log(error);
+                });
 
-                        if (sParameterName[0] === param) {
-                            res = sParameterName[1];
+                function getUrlParameter(param, dummyPath) {
+                        var sPageURL = dummyPath || window.location.search.substring(1),
+                            sURLVariables = sPageURL.split(/[&||?]/),
+                            res;
+
+                        for (var i = 0; i < sURLVariables.length; i += 1) {
+                            var paramName = sURLVariables[i],
+                                sParameterName = (paramName || '').split('=');
+
+                            if (sParameterName[0] === param) {
+                                res = sParameterName[1];
+                            }
                         }
-                    }
 
-                    return res;
-            }
+                        return res;
+                }
 
 
 

@@ -8,6 +8,8 @@ import com.foodlog.entity.MealLog;
 import com.foodlog.entity.ScheduledMeal;
 import com.foodlog.entity.user.User;
 import com.foodlog.entity.user.UserRepository;
+import com.foodlog.jaca.Jaca;
+import com.foodlog.jaca.JacaRepository;
 import com.foodlog.timeline.repository.ScheduledMealRepository;
 import com.foodlog.timeline.service.MealLogDayService;
 import com.foodlog.weight.Weight;
@@ -38,6 +40,9 @@ public class Controller {
     @Autowired
     private BodyLogService bodyLogService;
 
+    @Autowired
+    private JacaRepository jacaRepository;
+
     @RequestMapping("/body-log")
     public BodyLogImage getBodyPanel(@RequestParam(value="userid") Long userid,
     @RequestParam(defaultValue = "panel", value="image-type") String type) {
@@ -49,6 +54,12 @@ public class Controller {
         return bodyLogService.getBodyPanel(user);
     }
 
+
+    @RequestMapping("/jaca")
+    public List<Jaca> listJacass(@RequestParam(value="userid") Long userid) {
+        User user = userRepository.findOne(userid);
+        return jacaRepository.findTop30ByUserOrderByJacaDateTime(user);
+    }
 
     @RequestMapping("/weight")
     public List<Weight> listWeights(@RequestParam(value="userid") Long userid) {
