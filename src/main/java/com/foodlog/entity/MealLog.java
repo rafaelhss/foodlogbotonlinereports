@@ -41,6 +41,9 @@ public class MealLog implements Serializable {
     @Column(name = "update_id")
     private Long updateId;
 
+    @Column(name = "rating")
+    private Integer rating;
+
     @ManyToOne
     private ScheduledMeal scheduledMeal;
 
@@ -120,6 +123,19 @@ public class MealLog implements Serializable {
         this.updateId = updateId;
     }
 
+    public Integer getRating() {
+        return rating;
+    }
+
+    public MealLog rating(Integer rating) {
+        this.rating = rating;
+        return this;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
     public ScheduledMeal getScheduledMeal() {
         return scheduledMeal;
     }
@@ -175,6 +191,7 @@ public class MealLog implements Serializable {
             ", mealDateTime='" + getMealDateTime() + "'" +
             ", comment='" + getComment() + "'" +
             ", updateId='" + getUpdateId() + "'" +
+            ", rating='" + getRating() + "'" +
             "}";
     }
 }

@@ -10,6 +10,7 @@
 
     <style type="text/css">
 
+
     .box_rotate {
             -moz-transform: rotate(90deg);  /* FF3.5+ */
             -o-transform: rotate(90deg);  /* Opera 10.5 */
@@ -166,8 +167,6 @@
             var scheduledMeals = [];
             $.get("/scheduled-meals"+ window.location.href.substring(window.location.href.indexOf('?')),function(data){
                 scheduledMeals = data;
-                console.log('scheduledMeals');
-                console.log(scheduledMeals);
                 loadAll();
             });
 
@@ -175,8 +174,6 @@
 
             function loadAll () {
                 $.get("/meal-log"+ window.location.href.substring(window.location.href.indexOf('?'))    ,function(data){
-                    console.log('data');
-                    console.log(data);
 
                     // DOM element where the Timeline will be attached
                     var container = document.getElementById('visualization');
@@ -216,17 +213,24 @@
                         return items;
                     }
 
+                    function getTableStyled(rating){
+                        var colors = ["#ff0000","#cc3300","#ff9900","#ccff33","#99ff33","#00cc00"]
+
+                        return '<table class="score" style="border: 6px solid '+ colors[rating] +';">';
+                    }
                     function extractItens(data) {
                         var items = new vis.DataSet();
                         data.forEach(function(item, i){
                             var start = new Date((item.mealDateTime.epochSecond * 1000) + utcOffsetMillis);
+                            console.log(item);
+                            var tableStyled = getTableStyled(item.rating);
                             items.add({
                                 id: i,
                                 start: start,
                                 photoContentType: item.photoContentType,
                                 photo: item.photo,
                                 type: 'box',
-                                content: '<table class="score">' +
+                                content: tableStyled +
                                             '<tr>' +
                                                 '<td><img src="data:' + item.photoContentType + ';base64,'+ item.photo + '"  alt="mealLog image"/></td>' +
                                             '</tr>' +
