@@ -136,6 +136,8 @@ public class DayStatsService {
                 } else {
                     result.add(mealLog);
                 }
+            } else {
+                result.add(mealLog);
             }
             lastMealTime =  mealLog.getMealDateTime();
         }
