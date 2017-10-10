@@ -79,13 +79,17 @@ public class DayStatsService {
 
         penaltyDescription += "}";
 
+        float max = mealLogs.size();
         // se comeu menos do que devia, soma refeições não 100% para sensibilizar negativamente a nota
         if(scheduledMeals > mealLogs.size()){
             rawRatingScore += (scheduledMeals - mealLogs.size()) * SKIPPED_MEAL_RATING;
+            max = scheduledMeals;
         }
 
         //percentual de pontos em face do que poderia ser
-        float ratingScore = ((float)rawRatingScore) / ((float)mealLogs.size() * (float)MAX_RATING);
+        float ratingScore = ((float)rawRatingScore) / (max);
+
+
         System.out.println("");
         System.out.println("max: " +((float)mealLogs.size() * (float)MAX_RATING));
         System.out.println("rawRatingScore: " +rawRatingScore);
@@ -94,11 +98,6 @@ public class DayStatsService {
         System.out.println("ratingScore: " +ratingScore);
         System.out.println("Math.log(ratingScore): " + ((1) + Math.log(ratingScore)/Math.log(2)));
         System.out.println("xxxxxxxxxx");
-
-
-
-
-
 
 
         float ratingScoreAjusted = 100 * (float) (((1) + Math.log(ratingScore)/Math.log(2)));
