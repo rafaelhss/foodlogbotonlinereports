@@ -32,7 +32,7 @@ public class MealLogDayService {
 
         ZonedDateTime baseDate = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
 
-        //baseDate = baseDate.minus(5, ChronoUnit.DAYS);
+        //baseDate = baseDate.minus(1, ChronoUnit.DAYS);
 
         Instant yesterday = baseDate.truncatedTo(ChronoUnit.DAYS).toInstant().minus(1, ChronoUnit.DAYS);
         System.out.println(yesterday);

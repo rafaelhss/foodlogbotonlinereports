@@ -80,6 +80,27 @@
       border-width: 2px;
       border-color: #F991A3;
     }
+        
+
+    #day-marker{
+        width: 10px;
+        height: 100%;
+        position: relative;
+        background-color: black;
+    }    
+        
+    .day-bar{
+        height: 30px;
+        width: 100%;
+        background: -moz-linear-gradient(45deg, rgba(255,0,0,1) 0%, rgba(255,255,0,1) 50%, rgba(0,255,0,1) 100%); /* ff3.6+ */
+        background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(255,0,0,1)), color-stop(50%, rgba(255,255,0,1)), color-stop(100%, rgba(0,255,0,1))); /* safari4+,chrome */
+        background: -webkit-linear-gradient(45deg, rgba(255,0,0,1) 0%, rgba(255,255,0,1) 50%, rgba(0,255,0,1) 100%); /* safari5.1+,chrome10+ */
+        background: -o-linear-gradient(45deg, rgba(255,0,0,1) 0%, rgba(255,255,0,1) 50%, rgba(0,255,0,1) 100%); /* opera 11.10+ */
+        background: -ms-linear-gradient(45deg, rgba(255,0,0,1) 0%, rgba(255,255,0,1) 50%, rgba(0,255,0,1) 100%); /* ie10+ */
+        background: linear-gradient(45deg, rgba(255,0,0,1) 0%, rgba(255,255,0,1) 50%, rgba(0,255,0,1) 100%); /* w3c */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ff00', endColorstr='#ff0000',GradientType=1 ); /* ie6-9 */
+    }
+        
   </style>
 
 
@@ -89,15 +110,11 @@
 
 <body>
     <div>
-
+    <!--
+        
         <div style="padding:10px">
-            <div style="float: left;">
-                <h2>Today's Timeline</h2>
-            </div>
-            <div style="float: right; " >
-                <ul id="dayPenalties">
-
-                </ul>
+            <div>
+                Today's Timeline
             </div>
             <div style="float: right;" class="vis-timeline vis-item">
                 <div style=" text-align: center; font-size: 70px;" id="dayScore">58</div>
@@ -106,28 +123,47 @@
             <br style="clear: both;" />
         </div>
         <br/>
-
+    -->
+        
+        <h1 id="today"></h1>
+        <div class="day-bar">
+            <div style="float: left;">Jaca</div>
+            <div style="float: right;">Excelente</div>
+            <div id="day-marker" style="left:50%"></div>
+            
+        </div>
+        <br style="clear: both;" />
+        
         <div id="visualization"></div>
 
+        <div style="float: right; " >
+            <ul id="dayPenalties">
 
+            </ul>
+        </div>
+        
     </div>
 
 </body>
 <script>
 
+    document.getElementById("today").innerHTML = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+    
     //score
     function getScoreData(){
         $.get("/day-stats"+ window.location.href.substring(window.location.href.indexOf('?')),function(data){
                 stats = data;
+                /*
                 var score = document.getElementById("dayScore");
                 score.innerHTML = stats.dayScore.score;
-
+                */
                 var penalties = document.getElementById("dayPenalties");
                 stats.dayScore.penalties.forEach(function(item){
                     penalties.innerHTML += "<li>" + item +"</li>";
                 })
-
-
+            
+                document.getElementById("day-marker").style.left = stats.dayScore.ratingScore + "%";
+    
             });
 
     }

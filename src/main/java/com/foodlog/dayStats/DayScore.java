@@ -8,6 +8,8 @@ import java.util.List;
  */
 public class DayScore {
     private float score;
+    private float ratingScore;
+
     private List<String> penalties = new ArrayList<>();
 
     public float getScore() {
@@ -24,5 +26,14 @@ public class DayScore {
 
     public void setPenalties(List<String> penalties) {
         this.penalties = penalties;
+    }
+
+
+    public float getRatingScore() {
+        return ratingScore;
+    }
+
+    public void setRatingScore(float ratingScore) {
+        this.ratingScore = ratingScore;
     }
 }

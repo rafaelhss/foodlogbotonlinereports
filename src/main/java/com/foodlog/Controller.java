@@ -43,6 +43,7 @@ public class Controller {
     @Autowired
     private JacaRepository jacaRepository;
 
+    @CrossOrigin(origins = "*")
     @RequestMapping("/body-log")
     public BodyLogImage getBodyPanel(@RequestParam(value="userid") Long userid,
     @RequestParam(defaultValue = "panel", value="image-type") String type) {
@@ -55,28 +56,34 @@ public class Controller {
     }
 
 
+
+    @CrossOrigin(origins = "*")
     @RequestMapping("/jaca")
     public List<Jaca> listJacass(@RequestParam(value="userid") Long userid) {
         User user = userRepository.findOne(userid);
         return jacaRepository.findTop30ByUserOrderByJacaDateTime(user);
     }
 
+    @CrossOrigin(origins = "*")
     @RequestMapping("/weight")
     public List<Weight> listWeights(@RequestParam(value="userid") Long userid) {
         User user = userRepository.findOne(userid);
         return weightRepository.findTop30ByUserOrderByWeightDateTimeDesc(user);
     }
 
+    @CrossOrigin(origins = "*")
     @RequestMapping("/meal-log")
     public List<MealLog> getAllMealLogDays(@RequestParam(value="userid") Long userid) {
         return mealLogDayService.findAll(userRepository.findOne(userid));
     }
 
+    @CrossOrigin(origins = "*")
     @RequestMapping("/scheduled-meals")
     public List<ScheduledMeal> getAllScheduledMeals(@RequestParam(value="userid") Long userid) {
         return scheduledMealRepository.findByUserOrderByTargetTime(userRepository.findOne(userid));
     }
 
+    @CrossOrigin(origins = "*")
     @RequestMapping("/day-stats")
     public DayStats getDayStats(@RequestParam(value="userid") Long userid){
 
