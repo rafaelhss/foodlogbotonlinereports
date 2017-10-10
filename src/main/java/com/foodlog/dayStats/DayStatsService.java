@@ -92,7 +92,7 @@ public class DayStatsService {
         System.out.println("mealLogs.size(): " +mealLogs.size());
         System.out.println("scheduledMeals: " +scheduledMeals);
         System.out.println("ratingScore: " +ratingScore);
-        System.out.println("Math.log(ratingScore): " + ((1) + Math.log(0.83)/Math.log(2)));
+        System.out.println("Math.log(ratingScore): " + ((1) + Math.log(ratingScore)/Math.log(2)));
         System.out.println("xxxxxxxxxx");
 
 
@@ -101,7 +101,7 @@ public class DayStatsService {
 
 
 
-        float ratingScoreAjusted = 100* (float) (((1) + Math.log(0.83)/Math.log(2)));
+        float ratingScoreAjusted = 100 * (float) (((1) + Math.log(ratingScore)/Math.log(2)));
 
         penaltyDescription += ", Log(" + new DecimalFormat("#.##").format(ratingScoreAjusted) + ")";
         penaltyDescription += ", Score(" + new DecimalFormat("#.##").format(ratingScore) + ")";
