@@ -86,12 +86,15 @@ public class DayStatsService {
             max = scheduledMeals;
         }
 
+        max = max * MAX_RATING;
+        
         //percentual de pontos em face do que poderia ser
         float ratingScore = ((float)rawRatingScore) / (max);
 
 
+
         System.out.println("");
-        System.out.println("max: " +((float)mealLogs.size() * (float)MAX_RATING));
+        System.out.println("max: " + max);
         System.out.println("rawRatingScore: " +rawRatingScore);
         System.out.println("mealLogs.size(): " +mealLogs.size());
         System.out.println("scheduledMeals: " +scheduledMeals);
